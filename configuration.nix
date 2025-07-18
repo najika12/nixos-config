@@ -29,6 +29,14 @@
     useOSProber = true;
   };
 
+  # Auto start sway
+  services.getty = {
+    autologinUser = "luna";
+  };
+  environment.loginShellInit = ''
+    [[ "$(tty)" == /dev/tty1 ]] && sway
+  '';
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -88,7 +96,7 @@
     packages = with pkgs; [];
   };
   home-manager.users.luna = { pkgs, ... }: {
-    home.packages = [ pkgs.xwayland pkgs.nerd-fonts.jetbrains-mono pkgs.swaybg];
+    home.packages = [ pkgs.xwayland pkgs.nerd-fonts.jetbrains-mono pkgs.swaybg pkgs.sway-contrib.grimshot ];
     programs.bash.enable = true;
 
     # Foot terminal
@@ -130,6 +138,7 @@
       config = rec {
         modifier = "Mod4";
 	terminal = "foot";
+	menu = "rofi -show drun";
 	startup = [
 	  { command = "swaybg -i ${/home/luna/Pictures/Wallpaper/a.png} -m fill"; }
 	];
@@ -181,7 +190,7 @@
 
           "${modifier}+a" = "focus parent";
           "${modifier}+b" = "splith";
-          "${modifier}+d" = "exec /nix/store/gwk546kxw024v371l34sw11zvzqrxhdv-dmenu-5.3/bin/dmenu_path | /nix/store/gwk546kxw024v371l34sw11zvzqrxhdv-dmenu-5.3/bin/dmenu | /nix/store/7fjnb79r7p38piiyn5xwgcj5w7fpfi02-findutils-4.10.0/bin/xargs swaymsg exec --";
+          "${modifier}+Menu" = "exec ${menu}";
           "${modifier}+e" = "layout toggle split";
           "${modifier}+f" = "fullscreen toggle";
           "${modifier}+h" = "focus left";
@@ -195,9 +204,13 @@
           "${modifier}+v" = "splitv";
           "${modifier}+w" = "layout tabbed";
 
-          # Custom tambahan kamu
+          # Custom tambahan
           "${modifier}+bracketleft"  = "exec brightnessctl set 10%-";
           "${modifier}+bracketright" = "exec brightnessctl set 10%+";
+	  "${modifier}+semicolon" = "exec grimshot save output";
+	  "${modifier}+Control+semicolon" = "exec grimshot copy output";
+	  "${modifier}+apostrophe" = "exec grimshot save area";
+	  "${modifier}+Control+apostrophe" = "exec grimshot copy area";
         };
         input."2:14:ETPS/2_Elantech_Touchpad" = {
 	  dwt = "enabled";
@@ -209,13 +222,22 @@
     };
 
     # Swayidle
-    services.swayidle = {
-      enable = true;
-      timeouts = [
-        { timeout = 30; command = "${pkgs.swaylock}/bin/swaylock -fF"; }	
-	{ timeout = 60; command = "${pkgs.systemd}/bin/systemctl suspend"; }
-      ];
-    };
+  #services.swayidle = {
+    #enable = true;
+    #timeouts = [
+      #{ timeout = 15; command = "${pkgs.libnotify}/bin/notify-send 'Locking in 5 seconds' -t 5000"; }
+      #{ timeout = 20; command = "${pkgs.swaylock}/bin/swaylock -f -c 000000"; }
+      #{ timeout = 25; command = "swaymsg 'output * dpms off'"; resumeCommand = "swaymsg 'output * dpms on'"; }
+      #{ timeout = 30; command = "${pkgs.systemd}/bin/systemctl suspend"; }
+    #];
+    #events = [
+      #{ event = "before-sleep"; command = "swaymsg 'output * dpms off'; ${pkgs.swaylock}/bin/swaylock -f -c 000000"; }
+      #{ event = "after-resume"; command = "${pkgs.bash}/bin/bash -c 'sleep 1 && swaymsg \"output * dpms off\"'"; }
+      #{ event = "lock"; command = "swaymsg 'output * dpms off'; ${pkgs.swaylock}/bin/swaylock -f -c 000000"; }
+      #{ event = "unlock"; command = "swaymsg 'output * dpms on'"; }
+    #];
+  #};
+
 
     # Swaylock
     programs.swaylock = {
@@ -223,6 +245,11 @@
       settings = {
         image = /home/luna/Pictures/Wallpaper/a.png;
       };
+    };
+
+    # Rofi configuration
+    programs.rofi = {
+      enable = true;
     };
   };
 
@@ -235,7 +262,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim htop fastfetch git gnome-boxes brave obsidian discord telegram-desktop localsend wl-clipboard brightnessctl
+    neovim htop fastfetch git gnome-boxes brave obsidian discord telegram-desktop localsend wl-clipboard brightnessctl pavucontrol imv vlc xfce.thunar
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
