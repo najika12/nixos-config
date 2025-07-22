@@ -15,18 +15,18 @@
  in
  {
  imports =
-  [
+ [
    ./hardware-configuration.nix
    (import "${home-manager}/nixos")
-  ];
+ ];
    
   # Bootloader
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub = {
-   enable = true;
-   devices = [ "nodev" ];
-   efiSupport = true;
-   useOSProber = true;
+    enable = true;
+    devices = [ "nodev" ];
+    efiSupport = true;
+    useOSProber = true;
   };
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -43,29 +43,29 @@
   hardware.bluetooth.enable = true;
 
   # Nvidia Configuration
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.graphics.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
   hardware.nvidia = {
-   modesetting.enable = true;
-   powerManagement.enable = false;
-   powerManagement.finegrained = false;
-   open = false;
-   nvidiaSettings = true;
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    open = false;
+    nvidiaSettings = true;
   };
   hardware.nvidia.prime = {
-   intelBusId = "pci@000:00:02.0";
-   nvidiaBusId = "pci@000:04:00.0";
+    intelBusId = "pci@000:00:02.0";
+    nvidiaBusId = "pci@000:04:00.0";
   };
 
   # Enable sound with pipewire
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
-   enable = true;
-   alsa.enable = true;
-   alsa.support32Bit = true;
-   pulse.enable = true;
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
   # Set your time zone.
@@ -82,16 +82,16 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.luna = {
-   isNormalUser = true;
-   description = "Luna";
-   extraGroups = [ "networkmanager" "wheel" ];
-   packages = with pkgs; [];
+    isNormalUser = true;
+    description = "Luna";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [];
   };
 
   # Home Manager
   home-manager = {
-   useUserPackages = true;
-   users.luna = import ./home-luna.nix;
+    useUserPackages = true;
+    users.luna = import ./home-luna.nix;
   };
 
   security.polkit.enable = true;
@@ -103,9 +103,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-   neovim htop fastfetch git gnome-boxes brave obsidian discord telegram-desktop localsend wl-clipboard brightnessctl pavucontrol imv vlc xfce.thunar
+    neovim htop fastfetch git gnome-boxes obsidian discord telegram-desktop localsend wl-clipboard brightnessctl pavucontrol imv vlc xfce.thunar chromium qemu libvirt virt-manager
   ];
 
+  
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -121,16 +122,16 @@
 
   # Firewall Configuration
   networking.firewall = {
-   enable = true;
-   allowedTCPPorts = [ 80 443 53317 ];
+    enable = true;
+    allowedTCPPorts = [ 80 443 53317 ];
   };
 
   # Fail2ban Configuration
   services.fail2ban = {
-   enable = true;
-   ignoreIP = [ "127.0.0.1/8" ];
-   bantime = "60m";
-   maxretry = 5;
+    enable = true;
+    ignoreIP = [ "127.0.0.1/8" ];
+    bantime = "60m";
+    maxretry = 5;
   };
 
   # This value determines the NixOS release from which the default
