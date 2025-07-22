@@ -1,16 +1,30 @@
 { pkgs, lib, config,  ... }: {
 
- home.username = "luna";
- home.homeDirectory = "/home/luna";
- home.packages = [ pkgs.xwayland pkgs.nerd-fonts.jetbrains-mono pkgs.swaybg pkgs.sway-contrib.grimshot ];
-   programs.bash.enable = true;
-   home.stateVersion = "25.05";
+  home.username = "luna";
+  home.homeDirectory = "/home/luna";
+  fonts.fontconfig.enable = true;
+  home.packages = [ 
+    pkgs.xwayland
+    pkgs.nerd-fonts.jetbrains-mono
+    pkgs.nerd-fonts.hack
+    pkgs.swaybg
+    pkgs.sway-contrib.grimshot
+  ];
+  programs.bash.enable = true;
+  home.stateVersion = "25.05";
+
+  # Global Fonts
+  fonts.fontconfig.defaultFonts = {
+    serif = [ "JetBrains Mono" ];
+    sansSerif = [ "JetBrains Mono" ];
+    monospace = [ "JetBrains Mono" ];
+  };
 
   # Foot terminal
   programs.foot = {
     enable = true;
     settings = {
-      main.font = "JetBrainsMono Nerd Font:size=9";
+      main.font = "Hack Nerd Font:size=9";
 
       # theme Dracula
       colors = {
@@ -18,8 +32,8 @@
         background = "282a36";
         regular0 = "000000";
         regular1 = "ff5555";
-        regular2 = "50fa7b";
-        regular3 = "f1fa8c";
+	regular2 = "50fa7b";
+	regular3 = "f1fa8c";
 	regular4 = "bd93f9";
 	regular5 = "ff79c6";
 	regular6 = "8be9fd";
@@ -43,6 +57,10 @@
     config = rec {
       window.border = 1;
       window.titlebar = false;
+      fonts = {
+        names = [ "JetBrains Mono" ];
+	size = 10.0;
+      };
       modifier = "Mod4";
       terminal = "foot";
       menu = "rofi -show drun";
@@ -68,7 +86,7 @@
 	"${modifier}+Up"    = "focus up";
 
 	"${modifier}+Return" = "exec ${terminal}";
-	
+
 	"${modifier}+Shift+0" = "move container to workspace number 10";
 	"${modifier}+Shift+1" = "move container to workspace number 1";
 	"${modifier}+Shift+2" = "move container to workspace number 2";
@@ -87,7 +105,6 @@
 	
 	"${modifier}+Shift+c" = "reload";
 	"${modifier}+Shift+e" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit' ";
-
 	"${modifier}+Shift+h" = "move left";
 	"${modifier}+Shift+j" = "move down";
 	"${modifier}+Shift+k" = "move up";
