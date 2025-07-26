@@ -103,7 +103,21 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim htop fastfetch git gnome-boxes obsidian discord telegram-desktop localsend wl-clipboard brightnessctl pavucontrol imv vlc xfce.thunar chromium qemu libvirt virt-manager
+    neovim
+    htop
+    fastfetch
+    git gnome-boxes
+    telegram-desktop
+    localsend
+    wl-clipboard
+    brightnessctl
+    pavucontrol
+    imv
+    vlc
+    xfce.thunar
+    ungoogled-chromium
+    appflowy
+    google-authenticator
   ];
 
   
