@@ -106,7 +106,7 @@
     neovim
     htop
     fastfetch
-    git gnome-boxes
+    git
     telegram-desktop
     localsend
     wl-clipboard
