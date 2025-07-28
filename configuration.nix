@@ -117,7 +117,8 @@
     xfce.thunar
     ungoogled-chromium
     appflowy
-    google-authenticator
+    thunderbird
+    logseq
   ];
 
   
