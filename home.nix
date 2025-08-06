@@ -15,7 +15,6 @@
     logseq
     keepassxc
     kitty
-    vscodium
   ];
   programs.git = {
     enable = true;
