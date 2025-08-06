@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 
-{
+{ 
+  home.enableNixpkgsReleaseCheck = false;
   home.packages = with pkgs; [
     # Non GUI Programs 
     htop
@@ -20,10 +21,6 @@
     enable = true;
     userName = "John Doe";
     userEmail = "johndoe@example.com";
-  };
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
   };
   programs.nvf = {
     enable = true;
