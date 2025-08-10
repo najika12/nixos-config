@@ -37,19 +37,13 @@
       telescope.enable = true; 
       autocomplete.nvim-cmp.enable = true;  
       lsp.enable = true;
-      filetree.neo-tree.enable = true;
-      utility.snacks-nvim.enable = true;
-      terminal.toggleterm = {
-        enable = true;
-        setupOpts = {
-          direction = "horizontal";
-          winbar.enable = true;
-        };
-      };
-
+      
       extraPlugins = with pkgs.vimPlugins; {
-      };
-
+        neo-tree = {
+          package = neo-tree-nvim;      
+          setup = "require('neo-tree').setup({})";
+        };
+      };  
       languages = {
         enableTreesitter = true;
         nix.enable = true;
@@ -66,7 +60,7 @@
     themeFile = "Catppuccin-Mocha";    
     extraConfig = ''
        shell_integration enabled 
-pkgs.    '';    
+    '';    
   };
 
   xsession.windowManager.i3 = {
