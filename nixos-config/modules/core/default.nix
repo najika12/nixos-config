@@ -47,5 +47,6 @@
     unrar
     haruna
     vesktop
+    btop
   ];
 }
