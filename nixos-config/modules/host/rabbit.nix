@@ -1,0 +1,21 @@
+{ inputs, self, ... }: {
+
+  systems = [ "x86_64-linux" ];
+  flake.nixosConfigurations.rabbit = inputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [
+      ./../../hardware-configuration.nix
+      self.nixosModules.defaultCore
+      self.nixosModules.plasma
+      self.nixosModules.fail2ban
+      self.nixosModules.firewall
+      self.nixosModules.pipewire
+      self.nixosModules.print
+      self.nixosModules.resolved
+      self.nixosModules.xserver
+      self.nixosModules.luna
+      self.nixosModules.nvf
+      self.nixosModules.disko
+    ];
+  };
+}
