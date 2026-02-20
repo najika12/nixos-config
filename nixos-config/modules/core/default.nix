@@ -50,7 +50,6 @@
       haruna
       vesktop
       btop
-      kitty
     ];
 
     networking.hostName = "rabbit";
