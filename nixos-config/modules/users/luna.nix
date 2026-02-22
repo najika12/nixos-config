@@ -47,7 +47,7 @@
     kitty = { pkgs, ... }: {
       programs.kitty = {
         enable = true;
-        font.name = "JetBrains Mono";
+        font.name = "JetBrains Mono Regular";
         themeFile = "Catppuccin-Mocha";
         extraConfig = ''
           confirm_os_window_close 0

@@ -50,6 +50,8 @@
       haruna
       vesktop
       btop
+      anki
+      tor-browser
     ];
 
     networking.hostName = "rabbit";
